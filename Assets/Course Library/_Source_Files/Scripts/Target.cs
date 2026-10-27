@@ -24,9 +24,9 @@ public class Target : MonoBehaviour
 
     void Update()
     {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Mouse.current.leftButton.wasPressedThisFrame && gameManager.isGameActive)
         {
-            Debug.Log("Mouse was clicked");
+            //Debug.Log("Mouse was clicked");
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f);
             if (Physics.Raycast(ray, out RaycastHit hit))
@@ -62,6 +62,10 @@ public class Target : MonoBehaviour
         if (other.CompareTag("DestroyZone"))
         {
             Destroy(gameObject);
+            if (!gameObject.CompareTag("Bad"))
+            {
+                gameManager.GameOver();
+            }
         }
     }
 }
